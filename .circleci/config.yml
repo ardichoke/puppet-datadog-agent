@@ -3,7 +3,8 @@ orbs:
   win: circleci/windows@2.2.0
 jobs:
   specs-ruby21-puppet46: &specs
-    machine: true
+    machine:
+      image: ubuntu-2004:202201-02
     environment:
       STRICT_VARIABLES: 'yes'
       RUBY_VERSION: '2.1.9'
@@ -266,7 +267,8 @@ jobs:
       PUPPET_VERSION: '6.5.0'
 
   verify-gemfile-lock-dependencies:
-    machine: true
+    machine:
+      image: ubuntu-2004:202201-02
     environment:
       STRICT_VARIABLES: 'yes'
       RUBY_VERSION: '2.5.3'
@@ -290,7 +292,8 @@ jobs:
           command: rvm $RUBY_VERSION --verbose do bundle exec rake test
 
   kitchen-tests:
-    machine: true
+    machine:
+      image: ubuntu-2004:202201-02
     environment:
       STRICT_VARIABLES: 'yes'
       RUBY_VERSION: '2.5.3'
