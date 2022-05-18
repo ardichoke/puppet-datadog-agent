@@ -15,6 +15,17 @@ jobs:
           name: Fix git clones
           command: echo -e '[url "https://github.com/"]\n  insteadOf = "git://github.com/"' >> ~/.gitconfig
       - checkout
+      # To be able to install older Rubies on Ubuntu 20, we use https://github.com/rvm/ubuntu_rvm
+      - run:
+          name: Install rvm from PPA
+          command: |
+            apt update
+            apt install -y software-properties-common
+            apt-add-repository -y ppa:rael-gc/rvm
+            apt update
+            apt install -y rvm
+            source /usr/share/rvm/scripts/rvm
+            rvm reload
       - run:
           name: Install Ruby version
           command: rvm install $RUBY_VERSION
