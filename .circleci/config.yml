@@ -19,11 +19,11 @@ jobs:
       - run:
           name: Install rvm from PPA
           command: |
-            apt update
-            apt install -y software-properties-common
-            apt-add-repository -y ppa:rael-gc/rvm
-            apt update
-            apt install -y rvm
+            sudo apt update
+            sudo apt install -y software-properties-common
+            sudo apt-add-repository -y ppa:rael-gc/rvm
+            sudo apt update
+            sudo apt install -y rvm
             source /usr/share/rvm/scripts/rvm
             rvm reload
       - run:
