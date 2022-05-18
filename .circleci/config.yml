@@ -31,9 +31,13 @@ jobs:
       - run:
           name: Install old libssl1.0-dev
           command: |
-            sudo bash -c "echo deb http://security.ubuntu.com/ubuntu bionic-security main >> /etc/apt/sources.list"
-            sudo apt update && apt-cache policy libssl1.0-dev
-            sudo apt-get install -y libssl1.0-dev
+            ruby_major=$(echo $RUBY_VERSION | awk -F. '{ print $1 }')
+            ruby_minor=$(echo $RUBY_VERSION | awk -F. '{ print $2 }')
+            if [ $ruby_major -eq "2" ] && [ $ruby_minor -le "3" ]; then
+              sudo bash -c "echo deb http://security.ubuntu.com/ubuntu bionic-security main >> /etc/apt/sources.list"
+              sudo apt update && apt-cache policy libssl1.0-dev
+              sudo apt-get install -y libssl1.0-dev
+            fi
       - run:
           name: Install Ruby version
           command: rvm install $RUBY_VERSION
