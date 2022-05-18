@@ -16,18 +16,24 @@ jobs:
           command: echo -e '[url "https://github.com/"]\n  insteadOf = "git://github.com/"' >> ~/.gitconfig
       - checkout
       # To be able to install older Rubies on Ubuntu 20, we use https://github.com/rvm/ubuntu_rvm
+      #- run:
+      #    name: Install rvm from PPA
+      #    command: |
+      #      sudo apt update
+      #      sudo apt install -y software-properties-common
+      #      sudo apt-add-repository -y ppa:rael-gc/rvm
+      #      sudo apt update
+      #      sudo apt install -y rvm
+      #      sudo usermod -a -G rvm $USER
+      #      newgrp rvm
+      #      source /usr/share/rvm/scripts/rvm
+      #      rvm reload
       - run:
-          name: Install rvm from PPA
+          name: Install old libssl1.0-dev
           command: |
-            sudo apt update
-            sudo apt install -y software-properties-common
-            sudo apt-add-repository -y ppa:rael-gc/rvm
-            sudo apt update
-            sudo apt install -y rvm
-            sudo usermod -a -G rvm $USER
-            newgrp rvm
-            source /usr/share/rvm/scripts/rvm
-            rvm reload
+            sudo bash -c "echo deb http://security.ubuntu.com/ubuntu bionic-security main >> /etc/apt/sources.list"
+            sudo apt update && apt-cache policy libssl1.0-dev
+            sudo apt-get install -y libssl1.0-dev
       - run:
           name: Install Ruby version
           command: rvm install $RUBY_VERSION
